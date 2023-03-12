@@ -2,22 +2,24 @@ const BFS = require("./BFS.js")
 const truckPosition = {
     x: 1, y: 1
 }
-const io = require("socket.io")(4001, {
-    cors: {
-        origin: ["http://localhost:3000"],
-    }
-})
 
+var io = null
+const runSocket = (server) => {
+    io = server
 
-io.on("connection", socket => {
-    io.emit("truckPosition", truckPosition)
-    // console.log("Connected ", socket.id)
-    socket.on("disconnect", () => {
-        // console.log("Disconnected ", socket.id)
+    io.on("connection", socket => {
+        io.emit("truckPosition", truckPosition)
+        // console.log("Connected ", socket.id)
+        socket.on("disconnect", () => {
+            // console.log("Disconnected ", socket.id)
+        })
+
     })
+}
 
-})
+
 const truckPositionSocket = () => {
+
     io.emit("truckPosition", truckPosition)
 }
 const truckPositionInterwal = {
@@ -95,4 +97,4 @@ const runTruck = () => {
 }
 
 
-module.exports = { createMap, addTask, deleteTask, getTasks, runTruck }
+module.exports = { runSocket, createMap, addTask, deleteTask, getTasks, runTruck }
