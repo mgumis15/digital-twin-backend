@@ -17,7 +17,7 @@ truck.runSocket(io)
 let storeFile = JSON.parse(fs.readFileSync("data/fakeStore.json"))
 let logsFile = JSON.parse(fs.readFileSync("data/fakeLogs.json"))
 
-app.use(express.static(path.join(__dirname, "../digital-twin-frontend", "build")))
+app.use(express.static(path.join(__dirname, "../frontend")))
 app.use(express.static("public"))
 
 app.use(cors())
@@ -70,7 +70,7 @@ app.get("/warehouse", (req, res) => {
 })
 
 app.use('*', (req, res, next) => {
-    res.sendFile(path.join(__dirname, "../digital-twin-frontend", "build", "index.html"))
+    res.sendFile(path.join(__dirname, "../frontend", "index.html"))
 })
 
 
